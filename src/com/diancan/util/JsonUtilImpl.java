@@ -1,10 +1,10 @@
-package com.diancan.util.impl;
+package com.diancan.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.diancan.util.JsonUtil;
+import com.diancan.util.inter.JsonUtil;
 import com.google.gson.Gson;
 
 @Component("jsonUtil")

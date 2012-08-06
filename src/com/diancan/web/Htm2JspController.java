@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.diancan.mapper.RestaurantMapper;
 import com.diancan.model.Restaurant;
-import com.diancan.util.JsonUtil;
+import com.diancan.util.inter.JsonUtil;
 
 @Controller
 public class Htm2JspController {

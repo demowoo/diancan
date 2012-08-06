@@ -11,7 +11,7 @@ import com.diancan.model.DayOrder;
 import com.diancan.model.Food;
 import com.diancan.service.DayOrderService;
 import com.diancan.service.FoodService;
-import com.diancan.util.JsonUtil;
+import com.diancan.util.inter.JsonUtil;
 
 @Controller
 public class BookLunchController {

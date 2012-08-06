@@ -12,7 +12,7 @@ import com.diancan.mapper.FoodMapper;
 import com.diancan.mapper.RestaurantMapper;
 import com.diancan.model.Food;
 import com.diancan.model.Restaurant;
-import com.diancan.util.JsonUtil;
+import com.diancan.util.inter.JsonUtil;
 import common.Constant;
 
 @Controller
