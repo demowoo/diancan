@@ -30,7 +30,7 @@
 			   resultData= "连接服务器出错";
 		   }
 		});
-		if(resultData == 1)
+		if(resultData == "ok")
 			return  true;
 		else{
 			$('#warning').html(resultData);

@@ -17,8 +17,6 @@ import common.MD5Util;
 @Controller
 public class AccountController {
 
-	public static String LOGINUSER = "loginuser";
-	
 	@Autowired
 	private UserService userService;
 	
@@ -43,11 +41,11 @@ public class AccountController {
 		
 		pass = MD5Util.getMD5Digest(pass);
 		if(pass.equals(user.getPassword())){
-			httpSession.setAttribute(LOGINUSER, user);
+			httpSession.setAttribute(Constant.LOGININFO, user);
 		}else
 			return "forward:login.jsp";//密码错误
 		
-		return "index";
+		return "bookview";
 	}
 	
 	/**

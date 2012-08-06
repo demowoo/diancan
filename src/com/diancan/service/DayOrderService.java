@@ -1,7 +1,9 @@
 package com.diancan.service;
 
-import java.util.Date;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,18 +36,20 @@ public class DayOrderService {
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////
 	public DayOrder getDayOrder(long time){
-		long[] timeZone = getTimeZone(time);
-		return dayOrderMapper.getDayOrderByDay(timeZone[0], timeZone[1]);
+		Map timeZone = getTimeZone(time);
+		return dayOrderMapper.getDayOrderByDay(timeZone);
 	}
 	
-	private void updateStatus(boolean status, long time){
-		long[] timeZone = getTimeZone(time);
-		dayOrderMapper.updateDayOrderStatus(status, timeZone[0], timeZone[1]);
+	private void updateStatus(boolean open, long time){
+		Map timeZone = getTimeZone(time);
+		timeZone.put("open", open);
+		dayOrderMapper.updateDayOrderStatus(timeZone);
 	}
 	
 	private void updateRest(int restId, long time){
-		long[] timeZone = getTimeZone(time);
-		dayOrderMapper.updateDayOrderRest(restId, timeZone[0], timeZone[1]);
+		Map timeZone = getTimeZone(time);
+		timeZone.put("restid", restId);
+		dayOrderMapper.updateDayOrderRest(timeZone);
 	}
 	
 	private void updateDayOrder(DayOrder dayOrder){
@@ -54,22 +58,22 @@ public class DayOrderService {
 	
 	public boolean isOpen(){
 		Date date = new Date();
-		long[] timeZone = getTimeZone(date.getTime());
-		return dayOrderMapper.getStatus(timeZone[0], timeZone[1]);
+		Map timeZone = getTimeZone(date.getTime());
+		return dayOrderMapper.getStatus(timeZone);
 	}
 	
-	private long[] getTimeZone(long time){
+	private Map getTimeZone(long time){
 		Calendar calendar = Calendar.getInstance();
-		long[] timeZone = new long[2];
+		Map map = new HashMap<String, Long>();
 		calendar.setTimeInMillis(time);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
-		timeZone[0] = calendar.getTimeInMillis();
+		map.put("start", calendar.getTimeInMillis());
 		calendar.add(Calendar.DAY_OF_MONTH, 1);
-		timeZone[1] = calendar.getTimeInMillis();
-		return timeZone;
+		map.put("end", calendar.getTimeInMillis());
+		return map;
 	}
 	
 }
