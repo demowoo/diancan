@@ -45,6 +45,16 @@ public class DayOrderService {
 		dayOrderMapper.createDayOrder(dayOrder);
 	}
 	
+	public List<DayOrder> getOrderList(int limit){
+		return getOrderList(0, limit);
+	}
+	
+	public List<DayOrder> getOrderList(int startIndex, int endIndex){
+		Map map = new HashMap();
+		map.put("start", startIndex);
+		map.put("end", endIndex);
+		return dayOrderMapper.getDayOrderList(map);
+	}
 	/////////////////////////////////////////////////////////////////////////////////////////
 	public List<DayOrder> getDayOrder(long time){
 		Map timeZone = dateUtil.getTimeZone(time);

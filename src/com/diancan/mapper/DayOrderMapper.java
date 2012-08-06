@@ -17,6 +17,9 @@ public interface DayOrderMapper {
 	@Select("select * from dayorder where time>=#{start} and time<#{end}")
 	public List<DayOrder> getDayOrderListByDay(Map map);
 	
+	@Select("select * from dayorder limit start,end")
+	public List<DayOrder> getDayOrderList(Map map);
+	
 	@Select("select * from dayorder where id=#{id}")
 	public DayOrder getDayOrderById(int id);
 	

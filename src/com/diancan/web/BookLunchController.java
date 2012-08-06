@@ -94,7 +94,9 @@ public class BookLunchController {
 			model.put(Constant.INFO, "你已经建立过此餐馆的订单");
 			return "info";
 		}
-		dayOrderService.createDayOrder(restId, loginUser.getId());	
+		dayOrderService.createDayOrder(restId, loginUser.getId());
+		List<DayOrder> resultList = dayOrderService.getOrderList(10);
+		model.put("dayorderlist", resultList);
 		return "dayorderlist";
 	}
 	
