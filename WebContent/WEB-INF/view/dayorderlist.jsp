@@ -8,5 +8,5 @@
 </script>
 <title>订单模板</title>
 <%@ include file="/WEB-INF/template/banner.jsp" %>
-${restList }
+
 <%@ include file="/WEB-INF/template/footer.jsp" %>
