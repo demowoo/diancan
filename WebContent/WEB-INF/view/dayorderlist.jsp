@@ -6,7 +6,7 @@
 <script type="text/javascript">
 
 </script>
-<title>订单模板</title>
+<title>订单列表</title>
 <%@ include file="/WEB-INF/template/banner.jsp" %>
 
 <%@ include file="/WEB-INF/template/footer.jsp" %>

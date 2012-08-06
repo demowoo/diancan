@@ -72,13 +72,13 @@ public class BookLunchController {
 				resultMap.put("userName", user.getRealname());
 				resultList.add(dayOrder);
 			}
-			
+			model.put("dayorderlist", resultList);
 			model.put(STATUS, "open");
 			return "bookview";
 		}
 	}
 	
-	@RequestMapping("createDayOrder.action")
+	@RequestMapping("createdayorder.action")
 	public String createDayOrder(int restId, HttpSession httpSession, ModelMap model){
 		User loginUser = (User)httpSession.getAttribute(Constant.LOGININFO);
 		Date date = new Date();

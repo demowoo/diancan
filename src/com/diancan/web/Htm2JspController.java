@@ -32,4 +32,12 @@ public class Htm2JspController {
 		model.put("restlist", restList);
 		return "addfood";
 	}
+	
+	@RequestMapping("createorder.htm")
+	public String createOrder(ModelMap model){
+		List<Restaurant> restList = new ArrayList<Restaurant>();
+		restList = restaurantMapper.getRestList();
+		model.put("restlist", restList);
+		return "createorder";
+	}
 }

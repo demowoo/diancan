@@ -6,16 +6,14 @@
 <script type="text/javascript">
 
 </script>
-<title>点餐页面</title>
+<title>添加餐馆</title>
 <%@ include file="/WEB-INF/template/banner.jsp" %>
-<c:if test="${status=='booked' }">
-123
-</c:if>
-<c:if test="${status=='nostart' }">
-<a href='createorder.htm'>新建</a>
-</c:if>
-<c:if test="${status=='open' }">
-${dayorderlist }
-<a href='createorder.htm'>新建</a>
-</c:if>
+	<form id="createorder_form" action="createdayorder.action" method="post">
+		<select name="restId">
+			<c:forEach var="rest" items="${restlist}" >
+				<option value="${rest.id}">${rest.name}</option>
+			</c:forEach>
+		</select>
+	  <input type="submit" value="提交" />
+	</form>
 <%@ include file="/WEB-INF/template/footer.jsp" %>

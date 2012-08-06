@@ -46,7 +46,7 @@ public class DayOrderService {
 	}
 	
 	public List<DayOrder> getOrderList(int limit){
-		return getOrderList(0, limit);
+		return getOrderList(1, limit);
 	}
 	
 	public List<DayOrder> getOrderList(int startIndex, int endIndex){
