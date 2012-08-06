@@ -1,0 +1,15 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+.frame{
+	background-color: #fba;
+	width: 800px;
+	margin: 0 auto 0 auto;
+}
+
+#banner{
+	background-color: #bbb;
+	height: 100px;
+}
