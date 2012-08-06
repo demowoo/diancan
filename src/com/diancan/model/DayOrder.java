@@ -5,8 +5,9 @@ public class DayOrder {
 	
 	private int id;
 	private long time;
-	private boolean open;
+	private boolean open=true;
 	private int restId;
+	private int userId;//订单创建者id
 	
 	public int getId() {
 		return id;
@@ -31,5 +32,11 @@ public class DayOrder {
 	}
 	public void setOpen(boolean open) {
 		this.open = open;
+	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 }

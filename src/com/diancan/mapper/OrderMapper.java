@@ -8,6 +8,6 @@ import com.diancan.model.Order;
 
 public interface OrderMapper {
 	
-	@Select("select * from order where time>=#{start} and time<#{end}")
-	public Order getOrder(Map map);
+	@Select("select * from order where time>=#{start} and time<#{end} and userId=#{userId}")
+	public Order getOrderByUserId_Day(Map map);
 }

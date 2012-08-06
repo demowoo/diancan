@@ -1,6 +1,12 @@
 package com.diancan.web;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,39 +14,88 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.diancan.model.DayOrder;
-import com.diancan.model.Food;
+import com.diancan.model.Order;
+import com.diancan.model.Restaurant;
+import com.diancan.model.User;
 import com.diancan.service.DayOrderService;
 import com.diancan.service.FoodService;
+import com.diancan.service.OrderService;
+import com.diancan.service.RestaurantService;
+import com.diancan.service.UserService;
 import com.diancan.util.inter.JsonUtil;
+import common.Constant;
 
 @Controller
 public class BookLunchController {
+	
 	private static final String STATUS = "status";
-	private static final String FOODLIST = "foodlist";
 	
 	@Autowired
 	private DayOrderService dayOrderService;
 	@Autowired
 	private FoodService foodService;
 	@Autowired
-	JsonUtil jsonUtil;
+	private OrderService orderService;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private RestaurantService restaurantService;
+	@Autowired
+	private JsonUtil jsonUtil;
 	
 	@RequestMapping("bookview.action")
-	public String gotoBookPage(ModelMap model){
-		DayOrder dayOrder = dayOrderService.getTodayOrder();
-		if(dayOrder == null){
-			model.put(STATUS, "nostart");
+	public String gotoBookPage(ModelMap model, HttpSession httpSession){
+		User loginUser = (User)httpSession.getAttribute(Constant.LOGININFO);
+		Order userOrder = orderService.getTodayOrderByUserId(loginUser.getId()); 
+		
+		if(userOrder != null){//定过餐
+			model.put(STATUS, "booked");
+			model.put("userorder", userOrder);
+			return "bookview";
+		}else{
+			List<DayOrder> dayOrderList = dayOrderService.getTodayOrder();
+			if(dayOrderList == null){
+				model.put(STATUS, "nostart");
+				return "bookview";
+			}
+			
+			List resultList = new ArrayList();
+			for(DayOrder dayOrder : dayOrderList){
+				User user = userService.getUserById(dayOrder.getUserId());
+				Restaurant rest = restaurantService.getRestById(dayOrder.getRestId());
+				Map resultMap = new HashMap();
+				resultMap.put("dayOrderId", dayOrder.getId());
+				resultMap.put("time", dayOrder.getTime());
+				resultMap.put("open", dayOrder.isOpen());
+				resultMap.put("restName", rest.getName());
+				resultMap.put("restId", rest.getId());
+				resultMap.put("userName", user.getRealname());
+				resultList.add(dayOrder);
+			}
+			
+			model.put(STATUS, "open");
 			return "bookview";
 		}
-		if(!dayOrderService.isOpen()){
-			model.put(STATUS, "close");
-		}else{
-			model.put(STATUS, "open");
-			List<Food> foodlist = foodService.getCanOrderFoodList(dayOrder.getRestId());
-			String listJson = jsonUtil.toJsonString(foodlist);
-			model.put(FOODLIST, listJson);
-		}
-			
-		return "bookview";
 	}
+	
+	@RequestMapping("createDayOrder.action")
+	public String createDayOrder(int restId, HttpSession httpSession, ModelMap model){
+		User loginUser = (User)httpSession.getAttribute(Constant.LOGININFO);
+		Date date = new Date();
+		List<DayOrder> dayOrderList = dayOrderService.getDayOrder(date.getTime());
+		boolean booked = false;
+		for(DayOrder dayOrder : dayOrderList){
+			if(dayOrder.getRestId() == restId){
+				booked = true;
+				break;
+			}
+		}
+		if(booked){
+			model.put(Constant.INFO, "你已经建立过此餐馆的订单");
+			return "info";
+		}
+		dayOrderService.createDayOrder(restId, loginUser.getId());	
+		return "dayorderlist";
+	}
+	
 }

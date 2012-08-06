@@ -1,6 +1,8 @@
 package com.diancan.service;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,54 +16,61 @@ import com.diancan.util.DateUtil;
 public class DayOrderService {
 
 	@Autowired
-	DayOrderMapper dayOrderMapper;
+	private DayOrderMapper dayOrderMapper;
 	@Autowired
-	DateUtil dateUtil;
+	private DateUtil dateUtil;
 	
 	public static boolean OPEN = true;
 	public static boolean CLOSE = false;
 	
-	public void close(){
-		Date date = new Date();
-		updateStatus(CLOSE, date.getTime());
+	public void close(int dayOrderId){
+		updateStatus(CLOSE, dayOrderId);
 	}
 	
-	public void open(){
-		Date date = new Date();
-		updateStatus(OPEN, date.getTime());
+	public void open(int dayOrderId){
+		updateStatus(OPEN, dayOrderId);
 	}
 	
-	public DayOrder getTodayOrder(){
+	public List<DayOrder> getTodayOrder(){
 		Date date = new Date();
 		return getDayOrder(date.getTime());
 	}
+	
+	public void createDayOrder(int restId, int userId){
+		Date date = new Date();
+		DayOrder dayOrder = new DayOrder();
+		dayOrder.setRestId(restId);
+		dayOrder.setUserId(userId);
+		dayOrder.setTime(date.getTime());
+		dayOrderMapper.createDayOrder(dayOrder);
+	}
+	
 	/////////////////////////////////////////////////////////////////////////////////////////
-	public DayOrder getDayOrder(long time){
+	public List<DayOrder> getDayOrder(long time){
 		Map timeZone = dateUtil.getTimeZone(time);
-		return dayOrderMapper.getDayOrderByDay(timeZone);
+		return dayOrderMapper.getDayOrderListByDay(timeZone);
 	}
 	
-	private void updateStatus(boolean open, long time){
-		Map timeZone = dateUtil.getTimeZone(time);
-		timeZone.put("open", open);
-		dayOrderMapper.updateDayOrderStatus(timeZone);
+	private void updateStatus(boolean open, int dayOrderId){
+		Map map = new HashMap();
+		map.put("open", open);
+		map.put("id", dayOrderId);
+		dayOrderMapper.updateDayOrderStatus(map);
 	}
 	
-	private void updateRest(int restId, long time){
-		Map timeZone = dateUtil.getTimeZone(time);
-		timeZone.put("restid", restId);
-		dayOrderMapper.updateDayOrderRest(timeZone);
+	private void updateRest(int restId, int dayOrderId){
+		Map map = new HashMap();
+		map.put("restId", restId);
+		map.put("id", dayOrderId);
+		dayOrderMapper.updateDayOrderRest(map);
 	}
 	
 	private void updateDayOrder(DayOrder dayOrder){
 		dayOrderMapper.updateDayOrder(dayOrder);
 	}
 	
-	public boolean isOpen(){
-		Date date = new Date();
-		Map timeZone = dateUtil.getTimeZone(date.getTime());
-		return dayOrderMapper.getStatus(timeZone);
+	public DayOrder getDayOrderById(int dayOrderId){
+		return dayOrderMapper.getDayOrderById(dayOrderId);
 	}
-	
 	
 }

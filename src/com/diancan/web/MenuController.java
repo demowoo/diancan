@@ -22,7 +22,6 @@ public class MenuController {
 	private RestaurantMapper restaurantMapper;
 	@Autowired
 	private FoodMapper foodMapper;
-	
 	@Autowired
 	private JsonUtil jsonUtil;
 	

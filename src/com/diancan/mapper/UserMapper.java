@@ -15,6 +15,9 @@ public interface UserMapper {
 	@Select("select * from user where realname = #{realName}")
 	public User getUserByRealName(String realName);
 	
+	@Select("select * from user where id=#{id}")
+	public User getUserByUserId(int id);
+	
 	@Delete("delete from user where id=#{id}")
 	public void deleteUser(int userId);
 	
