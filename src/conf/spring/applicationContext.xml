@@ -18,7 +18,7 @@
 		<property name="jdbcUrl"
 			value="jdbc:mysql://127.0.0.1:3306/diancan?useUnicode=true&amp;characterEncoding=utf8" />
 		<property name="username" value="root" />
-		<property name="password" value="" />
+		<property name="password" value="123" />
 		<property name="idleConnectionTestPeriod" value="60" />
 		<property name="idleMaxAge" value="240" />
 		<property name="maxConnectionsPerPartition" value="10" />

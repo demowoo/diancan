@@ -40,7 +40,7 @@ public class AccountController {
 		}else
 			return "forward:login.jsp";//密码错误
 		
-		return "welcome";
+		return "forward:welcome.action";
 	}
 	
 	/**
@@ -77,7 +77,7 @@ public class AccountController {
 		userService.addUser(user);
 		
 		model.put(Constant.INFO, "注册成功，请等待管理员激活");
-		return "info";
+		return Constant.INFO;
 	}
 	
 	//验证注册

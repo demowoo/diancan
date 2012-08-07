@@ -8,8 +8,8 @@ public class Order {
 	private int dayOrderId;//日订单id
 	private String userName;//订餐者名称
 	private String foodName;//食物名称
-	private int price;//食物价格
-	private long time;//下单日期
+	private float price;//食物价格
+	private long time;//下单时间
 	
 	public int getId() {
 		return id;
@@ -53,10 +53,10 @@ public class Order {
 	public void setFoodName(String foodName) {
 		this.foodName = foodName;
 	}
-	public int getPrice() {
+	public float getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(float price) {
 		this.price = price;
 	}
 	public long getTime() {

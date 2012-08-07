@@ -14,6 +14,9 @@ public interface FoodMapper {
 	@Select("select * from food where restId = #{restId}")
 	public List<Food> getFoodListByRestId(int restId);
 	
+	@Select("select * from food where id = #{foodId}")
+	public Food getFoodById(int foodId);
+	
 	@Select("select * from food where name = #{name}")
 	public Food getFoodByRestName(String name);
 	

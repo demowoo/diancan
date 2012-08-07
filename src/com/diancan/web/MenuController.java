@@ -38,7 +38,7 @@ public class MenuController {
 		Restaurant restaurant = restaurantMapper.getRestByName(rest.getName());
 		if(restaurant != null){
 			model.put(Constant.INFO, "店名已经存在");
-			return "info";
+			return Constant.INFO;
 		}
 		Date date = new Date();
 		rest.setTime(date.getTime());
@@ -56,23 +56,23 @@ public class MenuController {
 		
 		if(food.getName().equals("")){
 			model.put(Constant.INFO, "菜单名不能为空");
-			return "info";
+			return Constant.INFO;
 		}
 		if(tempFood != null){
 			model.put(Constant.INFO, "菜名已经存在");
-			return "info";
+			return Constant.INFO;
 		}
 		Restaurant restaurant = restaurantMapper.getRestByRestId(food.getRestId());
 		if(restaurant == null){
 			model.put(Constant.INFO, "所属餐馆不存在");
-			return "info";
+			return Constant.INFO;
 		}
 		
 		try{
 			price = Float.parseFloat(pri);
 		}catch(NumberFormatException e){
 			model.put(Constant.INFO, "价格为空或格式错误");
-			return "info";
+			return Constant.INFO;
 		}
 		try{
 			start = Long.parseLong(day_start);

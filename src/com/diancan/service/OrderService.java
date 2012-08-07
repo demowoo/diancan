@@ -1,6 +1,7 @@
 package com.diancan.service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,14 @@ public class OrderService {
 		Map timeMap = dateUtil.getTimeZone(date.getTime());
 		timeMap.put("userId", userId);
 		return orderMapper.getOrderByUserId_Day(timeMap);
+	}
+	
+	public void addOrder(Order order){
+		orderMapper.addOrder(order);
+	}
+	
+	public List<Order> getOrderListByDayOrderId(int dayOrderId){
+		return orderMapper.getOrderListByDayOrderId(dayOrderId);
 	}
 	
 	/**

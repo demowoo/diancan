@@ -10,6 +10,6 @@
 		if(session.getAttribute(Constant.LOGININFO) == null){
 			response.sendRedirect("login.jsp");
 		}else
-			response.sendRedirect("bookview.action");
+			response.sendRedirect("welcome.action");
 	}
 %>

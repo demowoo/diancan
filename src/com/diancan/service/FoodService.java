@@ -48,4 +48,8 @@ public class FoodService {
 		}
 		return resultList;
 	}
+	
+	public Food getFoodId(int foodId){
+		return foodMapper.getFoodById(foodId);
+	}
 }
