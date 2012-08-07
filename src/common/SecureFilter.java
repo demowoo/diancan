@@ -30,10 +30,10 @@ public class SecureFilter implements Filter {
 		HttpServletRequest httpReqeust = (HttpServletRequest)request;
 		HttpServletResponse httpResponse = (HttpServletResponse)response;
 		HttpSession session = httpReqeust.getSession();
-//		if(session == null || session.getAttribute("loginInfo")==null){
-//			httpResponse.sendRedirect(ConstantVar.contextPath + "/session_lost.jsp");
-//			return;
-//		}
+		if(session == null || session.getAttribute(Constant.LOGININFO)==null){
+			httpResponse.sendRedirect(Constant.contextPath + "/session_lost.jsp");
+			return;
+		}
 		chain.doFilter(request, response);
 	}
 
