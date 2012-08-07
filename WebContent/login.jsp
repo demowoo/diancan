@@ -41,7 +41,7 @@
 </head>
 <body>
 	<a href="register.jsp">注册账号</a>
-	<form method="post" action="login.action" id="login_form" onsubmit="return validate()">
+	<form method="post" action="login.do" id="login_form" onsubmit="return validate()">
 		<div><label>用名：</label><input type="text" name="name" id="name"/></div>
 		<div><label>密码：</label><input type="password" name="pass" id="pass"/></div>
 		<input type="submit" value="登陆" id="submit"/>

@@ -2,7 +2,9 @@ package com.diancan.service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,5 +53,25 @@ public class FoodService {
 	
 	public Food getFoodId(int foodId){
 		return foodMapper.getFoodById(foodId);
+	}
+	  
+	public void addBookCount(int foodId){
+		int count = getFoodId(foodId).getBook_count();
+		Map map = new HashMap();
+		map.put("count", count+1);
+		map.put("foodId", foodId);
+		foodMapper.updateBookCount(map);
+	}
+	
+	public void subtractBookCount(int foodId){
+		int count = getFoodId(foodId).getBook_count();
+		if(count-1<0)
+			count = 0;
+		else
+			count = count-1;
+		Map map = new HashMap();
+		map.put("count", count);
+		map.put("foodId", foodId);
+		foodMapper.updateBookCount(map);
 	}
 }

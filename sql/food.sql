@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50148
 File Encoding         : 65001
 
-Date: 2012-08-06 09:07:25
+Date: 2012-08-07 17:41:40
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,9 +31,11 @@ CREATE TABLE `food` (
   `order_day_start` bigint(20) DEFAULT NULL,
   `order_day_end` bigint(20) DEFAULT NULL,
   `order_day_week` varchar(255) DEFAULT NULL,
+  `book_count` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of food
 -- ----------------------------
+INSERT INTO `food` VALUES ('2', '4', '鱼香肉丝', '13', '0', '', null, '', '0', '0', '', null);

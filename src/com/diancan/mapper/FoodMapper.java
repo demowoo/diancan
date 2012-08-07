@@ -1,6 +1,7 @@
 package com.diancan.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -29,6 +30,9 @@ public interface FoodMapper {
 			"pic=#{pic},can_order=#{can_order},order_day_start=#{order_day_start},order_day_end=#{order_day_end},order_day_week=#{order_day_week}"+
 			" where id=#{id}")
 	public void updateFood(Food food);
+	
+	@Update("update food set book_count=#{count} where id=#{foodId}")
+	public void updateBookCount(Map map);
 	
 	@Delete("delete from food where id=#{id}")
 	public void deleteFood(int id);

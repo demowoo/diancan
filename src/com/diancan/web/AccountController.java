@@ -20,7 +20,7 @@ public class AccountController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping(value="login.action", method=RequestMethod.POST)
+	@RequestMapping(value="login.do", method=RequestMethod.POST)
 	public String login(String name, String pass,  HttpSession httpSession){
 		
 		if(name == null || name.equals(""))//用户名不为空
@@ -40,7 +40,7 @@ public class AccountController {
 		}else
 			return "forward:login.jsp";//密码错误
 		
-		return "forward:welcome.action";
+		return "redirect:welcome.action";
 	}
 	
 	/**

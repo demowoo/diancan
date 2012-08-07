@@ -12,6 +12,7 @@ public class Food {
 	private long order_day_start;//可以点餐其实日期
 	private long order_day_end;//可以点餐终止日期
 	private String order_day_week;//一周中可以点餐的日子（分号分隔，1;2;3;4;5）起始日期为星期日，即1代表星期日
+	private int book_count;
 	
 	public boolean isCan_order() {
 		return can_order;
@@ -86,6 +87,12 @@ public class Food {
 	}
 	public void setRestId(int restId) {
 		this.restId = restId;
+	}
+	public int getBook_count() {
+		return book_count;
+	}
+	public void setBook_count(int book_count) {
+		this.book_count = book_count;
 	}
 	
 }
