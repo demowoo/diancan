@@ -18,7 +18,6 @@ import com.diancan.model.Order;
 import com.diancan.model.Restaurant;
 import com.diancan.model.User;
 import com.diancan.service.DayOrderService;
-import com.diancan.service.FoodService;
 import com.diancan.service.OrderService;
 import com.diancan.service.RestaurantService;
 import com.diancan.service.UserService;
@@ -33,8 +32,6 @@ public class BookLunchController {
 	@Autowired
 	private DayOrderService dayOrderService;
 	@Autowired
-	private FoodService foodService;
-	@Autowired
 	private OrderService orderService;
 	@Autowired
 	private UserService userService;
@@ -43,20 +40,20 @@ public class BookLunchController {
 	@Autowired
 	private JsonUtil jsonUtil;
 	
-	@RequestMapping("bookview.action")
-	public String gotoBookPage(ModelMap model, HttpSession httpSession){
+	@RequestMapping("welcome.action")
+	public String gotoWelcome(ModelMap model, HttpSession httpSession){
 		User loginUser = (User)httpSession.getAttribute(Constant.LOGININFO);
 		Order userOrder = orderService.getTodayOrderByUserId(loginUser.getId()); 
 		
 		if(userOrder != null){//定过餐
 			model.put(STATUS, "booked");
 			model.put("userorder", userOrder);
-			return "bookview";
+			return "welcome";
 		}else{
 			List<DayOrder> dayOrderList = dayOrderService.getTodayOrder();
 			if(dayOrderList == null){
 				model.put(STATUS, "nostart");
-				return "bookview";
+				return "welcome";
 			}
 			
 			List resultList = new ArrayList();
@@ -74,7 +71,7 @@ public class BookLunchController {
 			}
 			model.put("dayorderlist", resultList);
 			model.put(STATUS, "open");
-			return "bookview";
+			return "welcome";
 		}
 	}
 	

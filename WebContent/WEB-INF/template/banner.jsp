@@ -3,7 +3,7 @@
 <body>
 <div id="banner" class="frame">
 	<div id="navigation" class="frame">
-		<a href="${ctx}/bookview.action">点餐</a>
+		<a href="${ctx}/welcome.action">点餐</a>
 		<a href="">浏览菜单</a>
 		<a href="${ctx}/addrest.htm">添加餐馆</a>
 		<a href="${ctx}/addfood.htm">添加菜单</a>

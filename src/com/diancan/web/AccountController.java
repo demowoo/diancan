@@ -20,11 +20,6 @@ public class AccountController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping("test.action")
-	public String login(){
-		return "test";
-	}
-	
 	@RequestMapping(value="login.action", method=RequestMethod.POST)
 	public String login(String name, String pass,  HttpSession httpSession){
 		
@@ -45,7 +40,7 @@ public class AccountController {
 		}else
 			return "forward:login.jsp";//密码错误
 		
-		return "bookview";
+		return "welcome";
 	}
 	
 	/**
