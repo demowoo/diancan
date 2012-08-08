@@ -3,6 +3,7 @@ package com.diancan.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -34,4 +35,7 @@ public interface DayOrderMapper {
 	
 	@Update("update dayorder set restId=#{restId} where id=#{id}")
 	public void updateDayOrderRest(Map map);
+	
+	@Delete("delete from dayorder where id=#{dayOrderId")
+	public void delDayOrder(int dayOrderId);
 }

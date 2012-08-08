@@ -124,6 +124,7 @@ public class BookLunchController {
 		order.setUserName(loginUser.getRealname());
 		
 		orderService.addOrder(order);
+		foodService.addBookCount(foodId);
 		return "forward:welcome.action";
 	}
 	
@@ -140,5 +141,11 @@ public class BookLunchController {
 		model.put("user", user);
 		
 		return "viewdayorder";
+	}
+	
+	@RequestMapping("deldayorder.action")
+	public String delDayOrder(int dayOrderId){
+		dayOrderService.delDayOrder(dayOrderId);
+		return "forward:welcome.action";
 	}
 }

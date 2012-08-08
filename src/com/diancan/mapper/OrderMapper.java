@@ -3,6 +3,7 @@ package com.diancan.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
@@ -19,4 +20,7 @@ public interface OrderMapper {
 	@Insert("insert into `order`(dayOrderId,restId,foodId,userId,userName,foodName,price,time)" +
 			" values(#{dayOrderId},#{restId},#{foodId},#{userId},#{userName},#{foodName},#{price},#{time})")
 	public void addOrder(Order order);
+	
+	@Delete("delete from order where dayOrderId=#{dayOrderId}")
+	public void delOrder(int dayOrderId);
 }

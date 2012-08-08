@@ -18,6 +18,8 @@ public class DayOrderService {
 	@Autowired
 	private DayOrderMapper dayOrderMapper;
 	@Autowired
+	private OrderService orderService;
+	@Autowired
 	private DateUtil dateUtil;
 	
 	public static boolean OPEN = true;
@@ -55,10 +57,19 @@ public class DayOrderService {
 		map.put("end", endIndex);
 		return dayOrderMapper.getDayOrderList(map);
 	}
-	/////////////////////////////////////////////////////////////////////////////////////////
+
 	public List<DayOrder> getDayOrder(long time){
 		Map timeZone = dateUtil.getTimeZone(time);
 		return dayOrderMapper.getDayOrderListByDay(timeZone);
+	}
+	
+	public DayOrder getDayOrderById(int dayOrderId){
+		return dayOrderMapper.getDayOrderById(dayOrderId);
+	}
+	
+	public void delDayOrder(int dayOrderId){
+		dayOrderMapper.delDayOrder(dayOrderId);
+		orderService.delOrder(dayOrderId);
 	}
 	
 	private void updateStatus(boolean open, int dayOrderId){
@@ -77,10 +88,6 @@ public class DayOrderService {
 	
 	private void updateDayOrder(DayOrder dayOrder){
 		dayOrderMapper.updateDayOrder(dayOrder);
-	}
-	
-	public DayOrder getDayOrderById(int dayOrderId){
-		return dayOrderMapper.getDayOrderById(dayOrderId);
 	}
 	
 }
