@@ -9,11 +9,13 @@
 <title>添加食物</title>
 <%@ include file="/WEB-INF/template/banner.jsp" %>
 	<form id="addfood_form" action="addfood.action" method="post" onsubmit="return validate()">
-		<select name="restId">
+		<p>
+		餐馆名称：<select name="restId">
 			<c:forEach var="rest" items="${restlist}" >
 				<option value="${rest.id}">${rest.name}</option>
 			</c:forEach>
 		</select>
+		</p>
 		<p>菜名: <input type="text" name="name" id="name"/></p>
 		<p>价格: <input type="text" name="pri" id="pri"/></p>
 		<p>辣: <input type="radio" name="hot" value="1" /> 辣

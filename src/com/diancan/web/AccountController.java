@@ -116,4 +116,11 @@ public class AccountController {
 		userService.updateUserInfo(user);
 		return Constant.AJAX_SUC;
 	}
+	
+	
+	@RequestMapping("logout.action")
+	public String logout(HttpSession httpSession){
+		httpSession.removeAttribute(Constant.LOGININFO);
+		return "forward:login.jsp"; 
+	}
 }

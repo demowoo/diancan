@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/template/head.jsp" %>
 <style type="text/css">
-
+#addrest_form{
+	width: 500px;
+}
 </style>
 <script type="text/javascript">
 
