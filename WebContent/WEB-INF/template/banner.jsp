@@ -10,7 +10,7 @@
 		<a href="">我的信息</a>
 	</span>
 	<span id="userinfo">
-		<span>你好：${logininfo.realname }</span>|
+		<span>你好：${logininfo.loginname }</span>|
 		<a href="${ctx}/logout.action">退出</a>
 	</span>
 </div>

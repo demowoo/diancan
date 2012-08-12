@@ -4,7 +4,7 @@
 }
 
 body{
-	background-color:#BCB9B9;
+	background-color:#F1F1F1;
 }
 
 .frame{
@@ -30,8 +30,4 @@ body{
 
 #main{
 	min-height:600px;		
-}
-
-form{
-	margin:0 auto;
 }
