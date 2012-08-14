@@ -21,6 +21,9 @@ public interface OrderMapper {
 			" values(#{dayOrderId},#{restId},#{foodId},#{userId},#{userName},#{foodName},#{price},#{time})")
 	public void addOrder(Order order);
 	
-	@Delete("delete from order where dayOrderId=#{dayOrderId}")
-	public void delOrder(int dayOrderId);
+	@Delete("delete from `order` where dayOrderId=#{dayOrderId}")
+	public void delDayOrder(int dayOrderId);
+	
+	@Delete("delete from `order` where id=#{orderId}")
+	public void delOrder(int orderId);
 }

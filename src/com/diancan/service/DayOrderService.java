@@ -69,7 +69,7 @@ public class DayOrderService {
 	
 	public void delDayOrder(int dayOrderId){
 		dayOrderMapper.delDayOrder(dayOrderId);
-		orderService.delOrder(dayOrderId);
+		orderService.delDayOrder(dayOrderId);
 	}
 	
 	private void updateStatus(boolean open, int dayOrderId){

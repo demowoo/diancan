@@ -45,20 +45,26 @@ public class BookLunchController {
 		Order userOrder = orderService.getTodayOrderByUserId(loginUser.getId()); 
 
 		List<DayOrder> dayOrderList = dayOrderService.getTodayOrder();
-		
-		List resultList = new ArrayList();
-		for(DayOrder dayOrder : dayOrderList){
-			User user = userService.getUserById(dayOrder.getUserId());
-			Restaurant rest = restaurantService.getRestById(dayOrder.getRestId());
-			Map resultMap = new HashMap();
-			resultMap.put("dayOrderId", dayOrder.getId());
-			resultMap.put("time", dayOrder.getTime());
-			resultMap.put("open", dayOrder.isOpen());
-			resultMap.put("restName", rest.getName());
-			resultMap.put("restId", rest.getId());
-			resultMap.put("userName", user.getRealname());
-			resultList.add(resultMap);
+		boolean isOpen = true;
+		List resultList = null;
+		if(dayOrderList.size() > 0){
+			resultList = new ArrayList();
+			for(DayOrder dayOrder : dayOrderList){
+				if(userOrder != null && userOrder.getDayOrderId() == dayOrder.getId())
+					isOpen = dayOrder.isOpen();
+				User user = userService.getUserById(dayOrder.getUserId());
+				Restaurant rest = restaurantService.getRestById(dayOrder.getRestId());
+				Map resultMap = new HashMap();
+				resultMap.put("dayOrderId", dayOrder.getId());
+				resultMap.put("time", dayOrder.getTime());
+				resultMap.put("open", dayOrder.isOpen());
+				resultMap.put("restName", rest.getName());
+				resultMap.put("restId", rest.getId());
+				resultMap.put("userName", user.getRealname());
+				resultList.add(resultMap);
+			}
 		}
+		model.put("open", isOpen);
 		model.put("userorder", userOrder);
 		model.put("dayorderlist", resultList);
 		return "welcome";
@@ -83,6 +89,12 @@ public class BookLunchController {
 //		List<DayOrder> resultList = dayOrderService.getOrderList(10);
 //		model.put("dayorderlist", resultList);
 //		return "welcome";
+		return "forward:welcome.action";
+	}
+	
+	@RequestMapping("delorder.action")
+	public String delOrder(int orderId){
+		orderService.delOrder(orderId);
 		return "forward:welcome.action";
 	}
 	

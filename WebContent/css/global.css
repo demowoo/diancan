@@ -1,6 +1,7 @@
 *{
 	margin: 0;
 	padding: 0;
+	font-size: 12px;
 }
 
 body{
@@ -29,10 +30,28 @@ body{
 }
 
 #main{
-	min-height:600px;		
+	min-height:600px;
+	width: 760px;
+	padding: 10px 20px;		
+	border-left: 1px solid #fff;
+	border-right: 1px solid #fff;
 }
 
 input.button, a.button{
 	font-size: 12px;
 	font-weight: bold;
+}
+
+a.s_button{
+	
+}
+
+.h_title{
+	border-bottom: 1px solid #000;
+	padding: 5px 10px;
+}
+
+.m_content{
+	text-align: center;
+	padding: 10px;
 }
