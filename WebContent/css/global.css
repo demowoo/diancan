@@ -31,3 +31,8 @@ body{
 #main{
 	min-height:600px;		
 }
+
+input.button, a.button{
+	font-size: 12px;
+	font-weight: bold;
+}

@@ -11,5 +11,6 @@
 <script type="text/javascript" src="${ctx}/js/jquery.min.js"></script>
 <script type="text/javascript" src="${ctx}/js/jquery-ui-1.8.22.custom.min.js"></script>
 <script type="text/javascript" src="${ctx}/js/json2.min.js"></script>
+<script type="text/javascript" src="${ctx}/js/custom.js"></script>
 
 

@@ -8,14 +8,14 @@
 }
 div.itemWrapper{
 	position: relative;
-	padding-left: 340px;
+	padding-left: 320px;
 	padding-bottom: 10px;
 }
 form label{
  	position: absolute;
 	text-align: right;
 	left: 0;
-	width: 330px;
+	width: 310px;
 	display: block;
 	font-size: 14px;
 	padding: 4px 5px;
@@ -31,17 +31,20 @@ input.input-text{
     font-size: 14px;
     padding: 4px 5px;
 }
+input.button{
+	position: absolute;
+	left: 390px;
+}
 </style>
 <script type="text/javascript">
-
 </script>
 <title>添加食物</title>
 <%@ include file="/WEB-INF/template/banner.jsp" %>
 	<form id="addfood_form" action="addfood.action" method="post" onsubmit="return validate()">
 		<div class="itemWrapper"><label>
-		餐馆名称：
+		餐馆名称:
 		</label>
-		<select name="restId">
+		<select name="restId" class="input-text">
 			<c:forEach var="rest" items="${restlist}" >
 				<option value="${rest.id}">${rest.name}</option>
 			</c:forEach>
@@ -66,13 +69,13 @@ input.input-text{
 		</div>
 		
 		<div class="itemWrapper"><label>
-		点餐日期:
+		可点日期范围:
 		</label> 
 			   <input type="text" class="input-text" name="day_start" id="day_start"/>
 			   <input type="text" class="input-text" name="day_end" id="day_end"/>
 		</div>
 		<div class="itemWrapper"><label>
-		一周中可点范围:
+		一周中可点天数:
 		</label> 
 			<input type="checkbox" name="day_week" value="2" />周一
 			<input type="checkbox" name="day_week" value="3" />周二
@@ -82,6 +85,6 @@ input.input-text{
 			<input type="checkbox" name="day_week" value="7" />周六
 			<input type="checkbox" name="day_week" value="1" />周日	
 		</div>
-		<input type="submit" value="提交" />
+		<input type="submit" value="提交" class="button"/>
 	</form>
 <%@ include file="/WEB-INF/template/footer.jsp" %>

@@ -55,6 +55,6 @@ input.input-text{
 	  <div class="itemWrapper"><label>餐馆介绍: </label><textarea class="input-text" name="intro" id="intro"></textarea></div>
 	  <div class="itemWrapper"><label>餐馆地址: </label><input class="input-text" type="text" name="address" id="address"/></div>
 	  <div class="itemWrapper"><label>联系电话: </label><input class="input-text" type="text" name="phone" id="phone"/></div>
-	  <div class="itemWrapper"><input type="submit" value="提交" /></div>
+	  <div class="itemWrapper"><input type="submit" value="提交" class="button"/></div>
 	</form>
 <%@ include file="/WEB-INF/template/footer.jsp" %>

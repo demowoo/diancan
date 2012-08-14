@@ -35,6 +35,6 @@ ${userorder.price }
 </c:if>
 
 
-<a href='createorder.htm'>新建</a>
+<a href='createorder.htm' class='button'>新建</a>
 
 <%@ include file="/WEB-INF/template/footer.jsp" %>
