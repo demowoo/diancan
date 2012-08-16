@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.diancan.mapper.RestaurantMapper;
 import com.diancan.model.DayOrder;
 import com.diancan.model.Food;
 import com.diancan.model.Order;
@@ -23,6 +25,7 @@ import com.diancan.service.FoodService;
 import com.diancan.service.OrderService;
 import com.diancan.service.RestaurantService;
 import com.diancan.service.UserService;
+import com.diancan.util.inter.JsonUtil;
 import common.Constant;
 
 @Controller
@@ -38,6 +41,10 @@ public class BookLunchController {
 	private FoodService foodService;
 	@Autowired
 	private RestaurantService restaurantService;
+	@Autowired
+	private RestaurantMapper restaurantMapper;
+	@Autowired
+	private JsonUtil jsonUtil;
 	
 	@RequestMapping("welcome.action")
 	public String gotoWelcome(ModelMap model, HttpSession httpSession){
@@ -46,12 +53,16 @@ public class BookLunchController {
 
 		List<DayOrder> dayOrderList = dayOrderService.getTodayOrder();
 		boolean isOpen = true;
+		
 		List resultList = null;
 		if(dayOrderList.size() > 0){
 			resultList = new ArrayList();
 			for(DayOrder dayOrder : dayOrderList){
 				if(userOrder != null && userOrder.getDayOrderId() == dayOrder.getId())
 					isOpen = dayOrder.isOpen();
+				boolean isOwn = false;
+				if(dayOrder.getUserId() == loginUser.getId())
+					isOwn = true;
 				User user = userService.getUserById(dayOrder.getUserId());
 				Restaurant rest = restaurantService.getRestById(dayOrder.getRestId());
 				Map resultMap = new HashMap();
@@ -61,6 +72,7 @@ public class BookLunchController {
 				resultMap.put("restName", rest.getName());
 				resultMap.put("restId", rest.getId());
 				resultMap.put("userName", user.getRealname());
+				resultMap.put("isown", isOwn);
 				resultList.add(resultMap);
 			}
 		}
@@ -92,10 +104,26 @@ public class BookLunchController {
 		return "forward:welcome.action";
 	}
 	
+	@RequestMapping("getrestlist.do")
+	@ResponseBody
+	public String getRestList(){
+		List<Restaurant> restList = new ArrayList<Restaurant>();
+		restList = restaurantMapper.getRestList();
+		return jsonUtil.toJsonString(restList);
+	}
+	
 	@RequestMapping("delorder.action")
-	public String delOrder(int orderId){
-		orderService.delOrder(orderId);
-		return "forward:welcome.action";
+	public String delOrder(int orderId, ModelMap model){
+		Order order = orderService.getOrderById(orderId);
+		int dayOrderId = order.getDayOrderId();
+		DayOrder dayOrder = dayOrderService.getDayOrderById(dayOrderId);
+		if(dayOrder.isOpen()){
+			orderService.delOrder(orderId);
+			return "forward:welcome.action";
+		}else{
+			model.put(Constant.INFO, "你加入的订单已经关闭，不能取消订餐");
+			return Constant.INFO;
+		}
 	}
 	
 	@RequestMapping("choosefood.action")
@@ -137,7 +165,7 @@ public class BookLunchController {
 		
 		orderService.addOrder(order);
 		foodService.addBookCount(foodId);
-		return "forward:welcome.action";
+		return "redirect:welcome.action";
 	}
 	
 	@RequestMapping("viewdayorder.action")
@@ -147,17 +175,71 @@ public class BookLunchController {
 		Restaurant rest = restaurantService.getRestById(dayOrder.getRestId());
 		User user = userService.getUserById(dayOrder.getUserId());
 		
+		Map<Integer,Integer> countMap = new HashMap<Integer,Integer>();
+		float totalPrice = 0;
+		for(Order order : orderList){
+			totalPrice += order.getPrice();
+			Integer foodCount = countMap.get(order.getFoodId());
+			if(foodCount == null){
+				countMap.put(order.getFoodId(), 1);
+			}else{
+				countMap.put(order.getFoodId(), foodCount+1);
+			}
+		}
+		
+		List<Map> summaryList = new ArrayList<Map>();
+		for(Integer foodId : countMap.keySet()){
+			Order order = getOrderFromList(foodId, orderList);
+			Map summaryMap = new HashMap();
+			summaryMap.put("foodname", order.getFoodName());
+			summaryMap.put("count", countMap.get(foodId));
+			summaryList.add(summaryMap);
+		}
+		
 		model.put("dayorder", dayOrder);
 		model.put("orderlist", orderList);
 		model.put("rest", rest);
 		model.put("user", user);
+		model.put("summarylist", summaryList);
+		model.put("totalprice", totalPrice);
 		
 		return "viewdayorder";
+	}
+	private Order getOrderFromList(int foodId, List<Order> orderList){
+		for(Order order : orderList){
+			if(order.getFoodId() == foodId)
+				return order;
+		}
+		return null;	
 	}
 	
 	@RequestMapping("deldayorder.action")
 	public String delDayOrder(int dayOrderId){
 		dayOrderService.delDayOrder(dayOrderId);
+		return "forward:welcome.action";
+	}
+	
+	@RequestMapping("closedayorder.action")
+	public String closeDayOrder(int dayOrderId, HttpSession httpSession, ModelMap model){
+		User loginUser = (User)httpSession.getAttribute(Constant.LOGININFO);
+		DayOrder dayOrder = dayOrderService.getDayOrderById(dayOrderId);
+		if(dayOrder.getUserId() != loginUser.getId()){
+			model.put(Constant.INFO, "此订单不是你创建，你没有权限执行此操作！");
+			return Constant.INFO;
+		}
+		dayOrderService.close(dayOrderId);
+		return "forward:welcome.action";
+	}
+	
+	@RequestMapping("opendayorder.action")
+	public String openDayOrder(int dayOrderId, HttpSession httpSession, ModelMap model){
+		User loginUser = (User)httpSession.getAttribute(Constant.LOGININFO);
+		DayOrder dayOrder = dayOrderService.getDayOrderById(dayOrderId);
+		if(dayOrder.getUserId() != loginUser.getId()){
+			model.put(Constant.INFO, "此订单不是你创建，你没有权限执行此操作！");
+			return Constant.INFO;
+		}
+		dayOrderService.open(dayOrderId);
 		return "forward:welcome.action";
 	}
 }

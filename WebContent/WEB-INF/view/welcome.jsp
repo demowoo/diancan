@@ -18,6 +18,8 @@ table{
 }
 
 </style>
+
+<script type="text/javascript" src="${ctx}/js/jquery.blockUI.js"></script>
 <script type="text/javascript">
 $(document).ready(function() { 
     $('.create_order').click(function() { 
@@ -35,10 +37,21 @@ $(document).ready(function() {
 				backgroundColor:'#fff', 
 				cursor:         'default' 
    		    }
-		}); 
- 
-    }); 
-)};
+		});
+        $.get("getrestlist.do",function(data){
+        	var content = "<label>选择餐馆：</label><select name='restId'>";
+        	for(var i=0; i<data.length; i++)
+        		content += "<option value='" + data[i].id + "'>" + data[i].name + "</option>"; 
+        	content += "</select>";
+        	$("#rest_list").html(content);
+        },
+        "json");
+    });
+    
+    $('#close').click(function(){
+    	 $.unblockUI();
+    });
+});
 </script>
 <title>点餐页面</title>
 <%@ include file="/WEB-INF/template/banner.jsp" %>
@@ -74,8 +87,17 @@ $(document).ready(function() {
 				<td>
 					
 					<a class='s_button' href="viewdayorder.action?dayOrderId=${dayorder.dayOrderId}">查看</a>
-					<c:if test="${userorder.dayOrderId != dayorder.dayOrderId }">
-					<a class='s_button' href="choosefood.action?restId=${dayorder.restId }&dayOrderId=${dayorder.dayOrderId}">加入订单</a>
+					<c:if test="${userorder.dayOrderId != dayorder.dayOrderId && userorder == null}">
+						<a class='s_button' href="choosefood.action?restId=${dayorder.restId }&dayOrderId=${dayorder.dayOrderId}">加入订单</a>
+					</c:if>
+					<c:if test="${dayorder.isown == true }">
+						<a class='s_button' href="deldayorder.action?dayOrderId=${dayorder.dayOrderId}">删除订单</a>
+						<c:if test="${dayorder.open == true }">
+						<a class='s_button' href="closedayorder.action?dayOrderId=${dayorder.dayOrderId}">关闭订单</a>
+						</c:if>
+						<c:if test="${dayorder.open == false }">
+						<a class='s_button' href="opendayorder.action?dayOrderId=${dayorder.dayOrderId}">开启订单</a>
+						</c:if>
 					</c:if>
 				</td>
 			</tr>
@@ -89,6 +111,12 @@ $(document).ready(function() {
 </c:if>
 
 <div id="create_div">
-	<input type="button" id="create" value="创建" />
+	<form id="createorder_form" action="createdayorder.action" method="post">
+	  <div id="rest_list">
+	  </div>
+	  <br/>
+	  <input type="submit" value="提交" />
+	  <input type="button" value="关闭" id="close"/>
+	</form>
 </div>
 <%@ include file="/WEB-INF/template/footer.jsp" %>

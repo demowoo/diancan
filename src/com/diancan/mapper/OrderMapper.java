@@ -17,6 +17,9 @@ public interface OrderMapper {
 	@Select("select * from `order` where dayOrderId = #{dayOrderId}")
 	public List<Order> getOrderListByDayOrderId(int dayOrderId);
 	
+	@Select("select * from `order` where id = #{orderId}")
+	public Order getOrderById(int rderId);
+	
 	@Insert("insert into `order`(dayOrderId,restId,foodId,userId,userName,foodName,price,time)" +
 			" values(#{dayOrderId},#{restId},#{foodId},#{userId},#{userName},#{foodName},#{price},#{time})")
 	public void addOrder(Order order);

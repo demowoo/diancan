@@ -33,6 +33,9 @@ public class OrderService {
 		orderMapper.addOrder(order);
 	}
 	
+	public Order getOrderById(int orderId){
+		return orderMapper.getOrderById(orderId);
+	}
 	public void delDayOrder(int dayOrderId){
 		orderMapper.delDayOrder(dayOrderId);
 	}

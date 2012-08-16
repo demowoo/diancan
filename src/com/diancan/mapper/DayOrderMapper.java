@@ -36,6 +36,6 @@ public interface DayOrderMapper {
 	@Update("update dayorder set restId=#{restId} where id=#{id}")
 	public void updateDayOrderRest(Map map);
 	
-	@Delete("delete from dayorder where id=#{dayOrderId")
+	@Delete("delete from dayorder where id=#{dayOrderId}")
 	public void delDayOrder(int dayOrderId);
 }
