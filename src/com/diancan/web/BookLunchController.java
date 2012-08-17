@@ -216,6 +216,10 @@ public class BookLunchController {
 	@RequestMapping("deldayorder.action")
 	public String delDayOrder(int dayOrderId){
 		dayOrderService.delDayOrder(dayOrderId);
+		List<Order> foodList = orderService.getOrderListByDayOrderId(dayOrderId);
+		for(Order order : foodList){
+			foodService.subtractBookCount(order.getFoodId());
+		}
 		return "forward:welcome.action";
 	}
 	

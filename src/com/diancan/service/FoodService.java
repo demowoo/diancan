@@ -74,4 +74,8 @@ public class FoodService {
 		map.put("foodId", foodId);
 		foodMapper.updateBookCount(map);
 	}
+	
+	public List<Food> getFoodListByRestId(int restId){
+		return foodMapper.getFoodListByRestId(restId);
+	}
 }

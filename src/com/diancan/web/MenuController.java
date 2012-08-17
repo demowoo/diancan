@@ -7,11 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.diancan.mapper.FoodMapper;
 import com.diancan.mapper.RestaurantMapper;
 import com.diancan.model.Food;
 import com.diancan.model.Restaurant;
+import com.diancan.service.FoodService;
+import com.diancan.service.RestaurantService;
 import com.diancan.util.inter.JsonUtil;
 import common.Constant;
 
@@ -21,6 +24,8 @@ public class MenuController {
 	@Autowired
 	private RestaurantMapper restaurantMapper;
 	@Autowired
+	private FoodService foodService;
+	@Autowired
 	private FoodMapper foodMapper;
 	@Autowired
 	private JsonUtil jsonUtil;
@@ -28,8 +33,7 @@ public class MenuController {
 	@RequestMapping("viewmenu.action")
 	public String viewMenu(ModelMap model){
 		List<Restaurant> restList = restaurantMapper.getRestList();
-		String restListJson = jsonUtil.toJsonString(restList);
-		model.put("restList", restListJson);
+		model.put("restList", restList);
 		return "viewmenu";
 	}
 	
@@ -101,5 +105,12 @@ public class MenuController {
 		
 		foodMapper.addFood(food);
 		return "forward:viewmenu.action";
+	}
+	
+	@RequestMapping("getfoodlist.do")
+	@ResponseBody
+	public String getFoodListByRestId(int restId){
+		List<Food> foodList = foodService.getFoodListByRestId(restId);
+		return jsonUtil.toJsonString(foodList);
 	}
 }
