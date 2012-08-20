@@ -7,7 +7,10 @@
 		<a href="${ctx}/viewmenu.action">浏览菜单</a>|
 		<a href="${ctx}/addrest.htm">添加餐馆</a>|
 		<a href="${ctx}/addfood.htm">添加菜单</a>|
-		<a href="">我的信息</a>
+		<a href="${ctx}/myinfo.action">我的信息</a>
+		<c:if test="${logininfo.type == 1 }">
+			|<a href="admin.htm">管理页面</a>
+		</c:if>
 	</span>
 	<span id="userinfo">
 		<span>你好：${logininfo.loginname }</span>|

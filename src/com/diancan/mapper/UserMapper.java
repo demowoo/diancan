@@ -1,5 +1,7 @@
 package com.diancan.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -18,6 +20,9 @@ public interface UserMapper {
 	@Select("select * from user where id=#{id}")
 	public User getUserByUserId(int id);
 	
+	@Select("select * from user")
+	public List<User> getUserList();
+	
 	@Delete("delete from user where id=#{id}")
 	public void deleteUser(int userId);
 	
@@ -27,4 +32,7 @@ public interface UserMapper {
 	
 	@Update("update user set loginname=#{loginname}, realname=#{realname}, password=#{password}, type=#{type}, active=#{active} where id=#{id}")
 	public void updateUser(User user);
+	
+	@Update("update user set active = 1")
+	public void activeUser();
 }

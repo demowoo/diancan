@@ -48,6 +48,9 @@ public class OrderService {
 		return orderMapper.getOrderListByDayOrderId(dayOrderId);
 	}
 	
+	public List<Order> getOrderListByUserId(int userId){
+		return orderMapper.getOrderListByUserId(userId);
+	}
 	/**
 	 * 获取用户今天所属的订单
 	 * @param userId

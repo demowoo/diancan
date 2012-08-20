@@ -37,10 +37,14 @@ input.button{
 }
 </style>
 <script type="text/javascript">
+$(document).ready(function(){
+	("#day_start").datepicker();
+	("#day_end").datepicker();
+});
 </script>
 <title>添加食物</title>
 <%@ include file="/WEB-INF/template/banner.jsp" %>
-	<form id="addfood_form" action="addfood.action" method="post" onsubmit="return validate()">
+	<form id="addfood_form" action="addfood.action" method="post">
 		<div class="itemWrapper"><label>
 		餐馆名称:
 		</label>

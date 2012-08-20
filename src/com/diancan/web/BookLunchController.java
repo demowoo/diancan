@@ -158,7 +158,7 @@ public class BookLunchController {
 		order.setFoodId(foodId);
 		order.setFoodName(food.getName());
 		order.setPrice(food.getPrice());
-		order.setRestId(foodId);
+		order.setRestId(dayOrder.getRestId());
 		order.setTime(date.getTime());
 		order.setUserId(loginUser.getId());
 		order.setUserName(loginUser.getRealname());

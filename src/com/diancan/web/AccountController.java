@@ -1,5 +1,10 @@
 package com.diancan.web;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,16 +14,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.diancan.model.Order;
+import com.diancan.model.Restaurant;
 import com.diancan.model.User;
+import com.diancan.service.FoodService;
+import com.diancan.service.OrderService;
+import com.diancan.service.RestaurantService;
 import com.diancan.service.UserService;
 import common.Constant;
 import common.MD5Util;
+import common.Utils;
 
 @Controller
 public class AccountController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private OrderService orderService;
+	@Autowired
+	private FoodService foodService;
+	@Autowired
+	private RestaurantService restaurantService;
 	
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
 	public String login(String name, String pass,  HttpSession httpSession){
@@ -66,7 +83,7 @@ public class AccountController {
 	}
 	
 	//注册用户
-	@RequestMapping(value="register.action", method=RequestMethod.POST)
+	@RequestMapping(value="register.do", method=RequestMethod.POST)
 	public String addUser(User user, ModelMap model){
 		if(!regValidate(user).equals(Constant.AJAX_SUC))
 			return "forward:register.jsp";
@@ -123,4 +140,24 @@ public class AccountController {
 		httpSession.removeAttribute(Constant.LOGININFO);
 		return "forward:login.jsp"; 
 	}
+	
+	@RequestMapping("myinfo.action")
+	public String myinfo(ModelMap model, HttpSession httpSession){
+		User loginUser = (User)httpSession.getAttribute(Constant.LOGININFO);
+		List<Order> orderList = orderService.getOrderListByUserId(loginUser.getId());
+		List<Map> hisList = new ArrayList<Map>();
+		for(Order order : orderList){
+			Restaurant rest = restaurantService.getRestById(order.getRestId());
+			Map map = new HashMap();
+			map.put("foodname", order.getFoodName());
+			map.put("price", order.getPrice());
+			map.put("organizer", order.getUserName());
+			map.put("ordertime", Utils.formatDate(order.getTime(), "yyyy/M/d"));
+			map.put("restname", rest.getName());
+			hisList.add(map);
+		}
+		model.put("hislist", hisList);
+		return "myinfo";
+	}
+	
 }

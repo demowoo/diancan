@@ -1,5 +1,7 @@
 package com.diancan.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,10 @@ public class UserService {
 		return userMapper.getUserByLoginName(loginName);
 	}
 	
+	public List<User> getUserList(){
+		return userMapper.getUserList();
+	}
+	
 	public User getUserByRealName(String realName) {
 		return userMapper.getUserByRealName(realName);
 	}
@@ -30,5 +36,9 @@ public class UserService {
 	
 	public void addUser(User user){
 		userMapper.addUser(user);
+	}
+	
+	public void activeUser(int userId){
+		userMapper.activeUser();
 	}
 }

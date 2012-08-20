@@ -10,15 +10,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.diancan.mapper.RestaurantMapper;
 import com.diancan.model.Restaurant;
-import com.diancan.util.inter.JsonUtil;
+import com.diancan.model.User;
+import com.diancan.service.UserService;
 
 @Controller
 public class Htm2JspController {
 	
 	@Autowired
-	JsonUtil jsonUtil;
+	private RestaurantMapper restaurantMapper;
+	
 	@Autowired
-	RestaurantMapper restaurantMapper;
+	private UserService userService;
 	
 	@RequestMapping("addrest.htm")
 	public String addRest(){
@@ -31,6 +33,13 @@ public class Htm2JspController {
 		restList = restaurantMapper.getRestList();
 		model.put("restlist", restList);
 		return "addfood";
+	}
+	
+	@RequestMapping("admin.htm")
+	public String admin(ModelMap model){
+		List<User> userList = userService.getUserList();
+		model.put("userlist", userList);
+		return "admin";
 	}
 	
 }
