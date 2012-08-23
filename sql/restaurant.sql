@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50148
 File Encoding         : 65001
 
-Date: 2012-08-06 09:07:43
+Date: 2012-08-23 14:56:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,12 +31,8 @@ CREATE TABLE `restaurant` (
   `can_order` bit(1) DEFAULT NULL,
   `time` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of restaurant
 -- ----------------------------
-INSERT INTO `restaurant` VALUES ('1', null, null, null, null, null, null, null, null, null);
-INSERT INTO `restaurant` VALUES ('2', null, null, null, null, null, null, null, null, null);
-INSERT INTO `restaurant` VALUES ('3', null, null, null, null, null, null, null, null, null);
-INSERT INTO `restaurant` VALUES ('4', '凤飞飞', 'efefe', 'geggg', '21123123', '0', '0', '0', '', '1344071790568');
