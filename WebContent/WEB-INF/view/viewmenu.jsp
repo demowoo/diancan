@@ -48,13 +48,15 @@ $(document).ready(function(){
 				
 				if(foodList[i].order_day_start == "")
 					dayStart = "-";
-				else
-					datStart = new Date(foodList[i].order_day_start);
+				else{
+					dayStart = new Date(foodList[i].order_day_start).toLocaleDateString();
+					
+				}
 				
 				if(foodList[i].order_day_end == "")
 					dayEnd = "-";
 				else
-					dayEnd = new Date(foodList[i].order_day_end);
+					dayEnd = new Date(foodList[i].order_day_end).toLocaleDateString();
 				
 				var dateRange = dayStart + "-" + dayEnd;
 				

@@ -1,5 +1,7 @@
 package com.diancan.web;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -79,13 +81,17 @@ public class MenuController {
 			return Constant.INFO;
 		}
 		try{
-			start = Long.parseLong(day_start);
+			start = DateFormat.getDateInstance().parse(day_start).getTime();
 		}catch(NumberFormatException e){
+			start = 0L;
+		} catch (ParseException e) {
 			start = 0L;
 		}
 		try{
-			end = Long.parseLong(day_end);
+			end = DateFormat.getDateInstance().parse(day_end).getTime();
 		}catch(NumberFormatException e){
+			end = 0L;
+		} catch (ParseException e) {
 			end = 0L;
 		}
 		

@@ -35,11 +35,18 @@ input.button{
 	position: absolute;
 	left: 390px;
 }
+#day_start{
+	margin-bottom: 5px;
+}
+#day_end{
+
+}
 </style>
+<script type="text/javascript" src="${ctx}/js/jquery.ui.datepicker-zh-CN.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-	("#day_start").datepicker();
-	("#day_end").datepicker();
+	$("#day_start").datepicker();
+	$("#day_end").datepicker();
 });
 </script>
 <title>添加食物</title>
@@ -72,7 +79,8 @@ $(document).ready(function(){
 			<input type="radio" name="hot" value="0" checked="checked"/> 不辣
 		</div>
 		
-		<div class="itemWrapper"><label>
+		<div class="itemWrapper">
+		<label>
 		可点日期范围:
 		</label> 
 			   <input type="text" class="input-text" name="day_start" id="day_start"/>
