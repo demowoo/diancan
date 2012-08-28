@@ -93,7 +93,7 @@ form label{
   <div class="line-wrap"><label>登陆账号: </label><input type="text" name="loginname" id="loginname"/></div>
   <div class="line-wrap"><label>真实姓名: </label><input type="text" name="realname" id="realname"/></div>
   <div class="line-wrap"><label>登陆密码: </label><input type="password" name="password" id="password"/></div>
-  <div class="line-wrap"><label>确认密码: </label><input type="password" id="reinput"/></div>
+  <div class="line-wrap"><label>确认密码: </label><input type="password" name="reinput" id="reinput"/></div>
   <div id="submit_button"><input type="submit" value="提交" /></div>
   <span id="warning"></span>
 </form>
