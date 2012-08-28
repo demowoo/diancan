@@ -49,7 +49,7 @@ public class MenuController {
 		Date date = new Date();
 		rest.setTime(date.getTime());
 		restaurantMapper.addRest(rest);
-		return "forward:viewmenu.action";
+		return "forward:addfood.htm";
 	}
 	
 	@RequestMapping("addfood.action")
@@ -110,7 +110,7 @@ public class MenuController {
 		food.setOrder_day_week(day_week_str);
 		
 		foodMapper.addFood(food);
-		return "forward:viewmenu.action";
+		return "forward:addfood.htm";
 	}
 	
 	@RequestMapping("getfoodlist.do")

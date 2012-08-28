@@ -20,6 +20,7 @@ table th, table td{
 		<tr>
 			<th>食物名称</th>
 			<th>单价</th>
+			<th>辣否</th>
 			<th>操作</th>
 		</tr>
 		<c:forEach var="food" items="${foodlist}" >
@@ -29,6 +30,9 @@ table th, table td{
 				</td> 
 				<td>
 					${food.price }元
+				</td>
+				<td>
+					${food.hot == true ? "辣" : "--" }
 				</td>
 				<td>
 					<a href="book.action?foodId=${food.id }&dayOrderId=${dayorderid}">订餐</a>

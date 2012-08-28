@@ -41,10 +41,12 @@ $(document).ready(function(){
 		$(this).addClass("choosed");
 		var restId = $(this).attr("idvalue");
 		$.get("getfoodlist.do",{restId:restId},function(foodList){
-			var table = "<table><tr><th>菜名</th><th>人气</th><th>单价</th><th>可定日期</th><th>可定星期</th></tr>";
+			var table = "<table><tr><th>菜名</th><th>人气</th><th>辣否</th><th>单价</th><th>可定日期</th><th>每月可定范围</th><th>可定星期</th></tr>";
 			for(var i in foodList){
 				var dayStart = null;
 				var dayEnd = null;
+				var dayRangeStart = null;
+				var dayRangeEnd = null;
 				
 				if(foodList[i].order_day_start == "")
 					dayStart = "-";
@@ -59,11 +61,26 @@ $(document).ready(function(){
 					dayEnd = new Date(foodList[i].order_day_end).toLocaleDateString();
 				
 				var dateRange = dayStart + "-" + dayEnd;
+				////////////////////////////////////////
+				if(foodList[i].order_range_start == "0")
+					dayRangeStart = "-";
+				else
+					dayRangeStart = "每月" + foodList[i].order_range_start + "日-";
 				
+				if(foodList[i].order_range_end == "0")
+					dayRangeEnd = "-";
+				else
+					dayRangeEnd = foodList[i].order_range_end + "日";
+				
+				var dayRange =  dayRangeStart  + dayRangeEnd;
+				///////////////////////////////////////
 				var dayWeek = foodList[i].order_day_week;
 				if(dayWeek =="")
 					dayWeek = "-";
 				
+				var hot = "--";
+				if(foodList[i].hot == 1)
+					hot = "辣";
 				new Date(foodList[i].order_day_start);
 				table += "<tr><td>";
 				table += foodList[i].name;
@@ -72,10 +89,16 @@ $(document).ready(function(){
 				table += foodList[i].book_count;
 				table += "</td>";
 				table += "<td>";
+				table += hot;
+				table += "</td>";
+				table += "<td>";
 				table += foodList[i].price;
 				table += "</td>";
 				table += "<td>";
 				table += dateRange;
+				table += "</td>";
+				table += "<td>";
+				table += dayRange;
 				table += "</td>";
 				table += "<td>";
 				table += dayWeek;

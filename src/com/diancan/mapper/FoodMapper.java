@@ -12,7 +12,7 @@ import com.diancan.model.Food;
 
 public interface FoodMapper {
 	
-	@Select("select * from food where restId = #{restId}")
+	@Select("select * from food where restId = #{restId} order by price")
 	public List<Food> getFoodListByRestId(int restId);
 	
 	@Select("select * from food where id = #{foodId}")
@@ -22,13 +22,13 @@ public interface FoodMapper {
 	public Food getFoodByRestName(String name);
 	
 	@Insert("insert into food" +
-			"(restId, name ,price, taste_grading, hot, pic, can_order, order_day_start, order_day_end, order_day_week)" +
-			" values(#{restId},#{name},#{price},#{taste_grading},#{hot},#{pic},#{can_order},#{order_day_start},#{order_day_end},#{order_day_week})")
+			"(restId, name ,price, taste_grading, hot, pic, can_order, order_day_start, order_day_end, order_range_start, order_range_end, order_day_week)" +
+			" values(#{restId},#{name},#{price},#{taste_grading},#{hot},#{pic},#{can_order},#{order_day_start},#{order_day_end},#{order_range_start},#{order_range_end},#{order_day_week})")
 	public void addFood(Food food);
 	
 	@Update("update food set restId=#{restId}, name=#{name}, price=#{price}, taste_grading=#{taste_grading}, hot=#{hot}," +
-			"pic=#{pic},can_order=#{can_order},order_day_start=#{order_day_start},order_day_end=#{order_day_end},order_day_week=#{order_day_week}"+
-			" where id=#{id}")
+			"pic=#{pic},can_order=#{can_order},order_day_start=#{order_day_start},order_day_end=#{order_day_end},order_day_week=#{order_day_week},"+
+			"order_range_start=#{order_range_start}, order_range_end=#{order_range_end}, where id=#{id}")
 	public void updateFood(Food food);
 	
 	@Update("update food set book_count=#{count} where id=#{foodId}")

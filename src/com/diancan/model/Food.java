@@ -9,8 +9,10 @@ public class Food {
 	private boolean hot;//是否辣
 	private String pic;//图片
 	private boolean can_order=true;//能否被点
-	private long order_day_start;//可以点餐其实日期
-	private long order_day_end;//可以点餐终止日期
+	private long order_day_start;//可以点餐其实日期(确切的日期)
+	private long order_day_end;//可以点餐终止日期(确切的日期)
+	private byte order_range_start;//可以点餐日期范围的日期(每个月中的几号)
+	private byte order_range_end;//可以点餐范围的终止日期(每个月中的几号)
 	private String order_day_week;//一周中可以点餐的日子（分号分隔，1;2;3;4;5）起始日期为星期日，即1代表星期日
 	private int book_count;
 	
@@ -93,6 +95,18 @@ public class Food {
 	}
 	public void setBook_count(int book_count) {
 		this.book_count = book_count;
+	}
+	public byte getOrder_range_start() {
+		return order_range_start;
+	}
+	public void setOrder_range_start(byte order_range_start) {
+		this.order_range_start = order_range_start;
+	}
+	public byte getOrder_range_end() {
+		return order_range_end;
+	}
+	public void setOrder_range_end(byte order_range_end) {
+		this.order_range_end = order_range_end;
 	}
 	
 }

@@ -33,6 +33,6 @@ public interface UserMapper {
 	@Update("update user set loginname=#{loginname}, realname=#{realname}, password=#{password}, type=#{type}, active=#{active} where id=#{id}")
 	public void updateUser(User user);
 	
-	@Update("update user set active = 1")
-	public void activeUser();
+	@Update("update user set active = 1 where id=#{id}")
+	public void activeUser(int id);
 }

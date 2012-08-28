@@ -86,16 +86,35 @@ $(document).ready(function(){
 			   <input type="text" class="input-text" name="day_start" id="day_start"/>
 			   <input type="text" class="input-text" name="day_end" id="day_end"/>
 		</div>
-		<div class="itemWrapper"><label>
-		一周中可点天数:
-		</label> 
+		<div class="itemWrapper">
+		<label>
+		每月可点范围:
+		</label>
+			<select name="order_range_start">
+				<option value="0">0</option>
+				<c:forEach var="x" begin="1" end="31" step="1">
+					<option value="${x }">${x }</option>
+				</c:forEach>
+			</select>
+			
+			<select name="order_range_end">
+				<option value="0">0</option>
+				<c:forEach var="y" begin="1" end="31" step="1">
+					<option value="${y }">${y }</option>
+				</c:forEach>
+			</select>
+		</div>
+		<div class="itemWrapper">
+			<label>
+			一周中可点天数:
+			</label> 
 			<input type="checkbox" name="day_week" value="2" />周一
 			<input type="checkbox" name="day_week" value="3" />周二
 			<input type="checkbox" name="day_week" value="4" />周三
 			<input type="checkbox" name="day_week" value="5" />周四
 			<input type="checkbox" name="day_week" value="6" />周五
 			<input type="checkbox" name="day_week" value="7" />周六
-			<input type="checkbox" name="day_week" value="1" />周日	
+			<input type="checkbox" name="day_week" value="1" />周日
 		</div>
 		<input type="submit" value="提交" class="button"/>
 	</form>

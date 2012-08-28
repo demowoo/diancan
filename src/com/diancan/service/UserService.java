@@ -39,6 +39,6 @@ public class UserService {
 	}
 	
 	public void activeUser(int userId){
-		userMapper.activeUser();
+		userMapper.activeUser(userId);
 	}
 }

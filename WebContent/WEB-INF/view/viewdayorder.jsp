@@ -26,7 +26,12 @@ table th, table td{
 }
 </style>
 <script type="text/javascript">
-
+$(document).ready(function(){
+	$(".time").each(function(){
+		var value = $(this).html();
+		$(this).html(formatTime(value));
+	});
+});
 </script>
 <title>查看订单内容</title>
 <%@ include file="/WEB-INF/template/banner.jsp" %>
@@ -34,7 +39,7 @@ table th, table td{
 	<span class="title">今日订单：</span>
 	<span class="title">${rest.name }</span>
 	<span class="title">${user.realname }</span>
-	<span class="title">${dayorder.time }</span>
+	<span class="title time">${dayorder.time }</span>
 </div>
 <table>
 	<tr>
@@ -49,7 +54,7 @@ table th, table td{
 			  <td>${order.foodName } </td>
 			  <td>${order.price }元</td>
 			  <td>${order.userName }</td>
-			  <td>${order.time }</td>
+			  <td class="time">${order.time }</td>
 			</tr>
 		</c:forEach>
 	</c:if>

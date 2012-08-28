@@ -118,6 +118,7 @@ public class BookLunchController {
 		int dayOrderId = order.getDayOrderId();
 		DayOrder dayOrder = dayOrderService.getDayOrderById(dayOrderId);
 		if(dayOrder.isOpen()){
+			foodService.subtractBookCount(order.getFoodId());
 			orderService.delOrder(orderId);
 			return "forward:welcome.action";
 		}else{

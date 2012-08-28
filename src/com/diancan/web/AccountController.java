@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.diancan.model.DayOrder;
 import com.diancan.model.Order;
 import com.diancan.model.Restaurant;
 import com.diancan.model.User;
+import com.diancan.service.DayOrderService;
 import com.diancan.service.FoodService;
 import com.diancan.service.OrderService;
 import com.diancan.service.RestaurantService;
@@ -36,6 +38,8 @@ public class AccountController {
 	private FoodService foodService;
 	@Autowired
 	private RestaurantService restaurantService;
+	@Autowired
+	private DayOrderService dayOrderService;
 	
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
 	public String login(String name, String pass,  HttpSession httpSession){
@@ -84,8 +88,8 @@ public class AccountController {
 	
 	//注册用户
 	@RequestMapping(value="register.do", method=RequestMethod.POST)
-	public String addUser(User user, ModelMap model){
-		if(!regValidate(user).equals(Constant.AJAX_SUC))
+	public String addUser(User user, String reinput, ModelMap model){
+		if(!regValidate(user, reinput).equals(Constant.AJAX_SUC))
 			return "forward:register.jsp";
 		
 		user.setActive(false);
@@ -99,13 +103,15 @@ public class AccountController {
 	
 	//验证注册
 	@RequestMapping("regValidate.do")
-	public @ResponseBody String regValidate(User user){
+	public @ResponseBody String regValidate(User user, String reinput){
 		if(user.getLoginname() == null || user.getLoginname().equals(""))
 			return "账号不能为空";
 		if(user.getRealname() == null || user.getRealname().equals(""))
 			return "真实姓名不能为空";
 		if(user.getPassword() == null || user.getPassword().equals(""))
 			return "密码不能为空";
+		if(reinput == null || !user.getPassword().equals(reinput))
+			return "前后两次输入的密码不一致";
 		
 		User loginUser = userService.getUserByLoginName(user.getLoginname());
 		if(loginUser != null)
@@ -148,10 +154,12 @@ public class AccountController {
 		List<Map> hisList = new ArrayList<Map>();
 		for(Order order : orderList){
 			Restaurant rest = restaurantService.getRestById(order.getRestId());
+			DayOrder dayOrder = dayOrderService.getDayOrderById(order.getDayOrderId());
+			User organizer = userService.getUserById(dayOrder.getUserId());
 			Map map = new HashMap();
 			map.put("foodname", order.getFoodName());
 			map.put("price", order.getPrice());
-			map.put("organizer", order.getUserName());
+			map.put("organizer", organizer.getRealname());
 			map.put("ordertime", Utils.formatDate(order.getTime(), "yyyy/M/d"));
 			map.put("restname", rest.getName());
 			hisList.add(map);

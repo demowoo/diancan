@@ -22,6 +22,7 @@ public class FoodService {
 		List<Food> foodList = foodMapper.getFoodListByRestId(restId);
 		Calendar calendar =  Calendar.getInstance();
 		long now = calendar.getTimeInMillis();
+		int today = calendar.get(Calendar.DAY_OF_MONTH);
 		
 		List<Food> resultList = new ArrayList<Food>();
 		for(Food food : foodList){
@@ -34,6 +35,10 @@ public class FoodService {
 						|| now < food.getOrder_day_start())
 					continue;
 			}
+			//是否在每月可点的日期范围内
+			if(food.getOrder_range_start() != 0 && food.getOrder_range_end() != 0)
+				if(food.getOrder_range_start() > today || food.getOrder_range_end() < today)
+					continue;
 			//是否在可以订餐星期中
 			if(food.getOrder_day_week() != null && !food.getOrder_day_week().equals("")){
 				String[] weekDays = food.getOrder_day_week().split(";");
