@@ -113,10 +113,17 @@ public class BookLunchController {
 	}
 	
 	@RequestMapping("delorder.action")
-	public String delOrder(int orderId, ModelMap model){
+	public String delOrder(int orderId, ModelMap model, HttpSession httpSession){
+		User loginUser = (User)httpSession.getAttribute(Constant.LOGININFO);
 		Order order = orderService.getOrderById(orderId);
 		int dayOrderId = order.getDayOrderId();
 		DayOrder dayOrder = dayOrderService.getDayOrderById(dayOrderId);
+		
+		if(order.getUserId() != loginUser.getId() && dayOrder.getUserId() != loginUser.getId()){
+			model.put(Constant.INFO, "你没有权限删除订单");
+			return Constant.INFO;
+		}
+		
 		if(dayOrder.isOpen()){
 			foodService.subtractBookCount(order.getFoodId());
 			orderService.delOrder(orderId);
@@ -203,6 +210,7 @@ public class BookLunchController {
 		model.put("user", user);
 		model.put("summarylist", summaryList);
 		model.put("totalprice", totalPrice);
+		model.put("totalcount", orderList.size());
 		
 		return "viewdayorder";
 	}

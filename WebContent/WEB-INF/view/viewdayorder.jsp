@@ -61,7 +61,7 @@ $(document).ready(function(){
 </table>
 <br/>
 <br/>
-<div id="title_wrapper">订单概要 联系电话：${rest.phone } 总价：${totalprice }元</div>
+<div id="title_wrapper">订单概要 联系电话：${rest.phone }  共:${totalcount}份  总价:${totalprice }元 </div>
 <table>
 	<c:if test="${summarylist != null }">
 		<c:forEach var="summary" items="${summarylist}" >
